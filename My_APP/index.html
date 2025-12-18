@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>M Pandian | DevOps CI/CD Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(14px);
+      padding: 40px;
+      border-radius: 22px;
+      max-width: 900px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+      text-align: center;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    h1 {
+      color: #00e5ff;
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-weight: 400;
+      opacity: 0.9;
+      margin-bottom: 25px;
+    }
+
+    p {
+      opacity: 0.95;
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .stack {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 35px;
+    }
+
+    .item {
+      background: rgba(0,0,0,0.35);
+      padding: 18px;
+      border-radius: 14px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .item:hover {
+      transform: translateY(-8px) scale(1.03);
+      background: rgba(0,229,255,0.25);
+      box-shadow: 0 10px 25px rgba(0,229,255,0.3);
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 1.1rem;
+      color: #00e5ff;
+      font-weight: 500;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>🚀 M. Pandian</h1>
+    <h2>DevOps | CI/CD | Cloud Automation</h2>
+
+    <p>
+      💡 This project demonstrates a <b>real-world DevOps automation pipeline</b>
+      built using <b>Git, GitHub, Jenkins, Terraform, and AWS</b>.<br><br>
+
+      📝 The development process begins with <b>Git</b>, where clean commits and
+      version control ensure a structured and traceable codebase.<br>
+
+      🌍 The source code is pushed to <b>GitHub</b>, acting as the central repository
+      and single source of truth.<br>
+
+      🔔 A <b>GitHub Webhook</b> instantly triggers a <b>Jenkins CI/CD pipeline</b>
+      whenever new code is pushed — enabling continuous integration.<br>
+
+      🤖 Jenkins automatically pulls the latest code, validates it, and deploys
+      the application to <b>AWS EC2</b> without manual intervention.<br>
+
+      ☁️ Infrastructure is provisioned using <b>Terraform (Infrastructure as Code)</b>,
+      and the server is bootstrapped using <b>Linux user_data</b> for complete automation.<br><br>
+
+      ⚡ The result is a fast, reliable, and production-ready deployment pipeline
+      from code commit to cloud.
+    </p>
+
+    <div class="stack">
+      <div class="item">📝 Git – Version Control & Commit History</div>
+      <div class="item">🌍 GitHub – Central Code Repository</div>
+      <div class="item">🤖 Jenkins – CI/CD Automation Engine</div>
+      <div class="item">☁️ AWS EC2 – Cloud Compute Infrastructure</div>
+      <div class="item">⚙️ Terraform – Infrastructure as Code</div>
+      <div class="item">🐧 Linux – Server & Process Management</div>
+      <div class="item">🎨 HTML & CSS – UI & Frontend Design</div>
+    </div>
+
+    <div class="footer">
+      🚀 Code → Build → Deploy → Cloud | Fully Automated DevOps Pipeline
+    </div>
+  </div>
+</body>
+</html>
+
