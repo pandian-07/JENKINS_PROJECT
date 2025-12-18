@@ -16,13 +16,8 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                withCredentials([
-                    string(credentialsId: 'AWS_ACCESS_KEY', variable: 'AWS_ACCESS_KEY_ID'),
-                    string(credentialsId: 'AWS_SECRET_KEY', variable: 'AWS_SECRET_ACCESS_KEY')
-                ]) {
-                    dir("${TF_ROOT}") {
-                        bat 'terraform init'
-                    }
+                dir("${TF_ROOT}") {
+                    bat 'terraform init'
                 }
             }
         }
@@ -37,8 +32,13 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                dir("${TF_ROOT}") {
-                    bat 'terraform plan -out=tfplan'
+                withCredentials([
+                    string(credentialsId: 'AWS_ACCESS_KEY', variable: 'TF_VAR_aws_access_key'),
+                    string(credentialsId: 'AWS_SECRET_KEY', variable: 'TF_VAR_aws_secret_key')
+                ]) {
+                    dir("${TF_ROOT}") {
+                        bat 'terraform plan -out=tfplan'
+                    }
                 }
             }
         }
@@ -49,8 +49,13 @@ pipeline {
                 ok "Apply"
             }
             steps {
-                dir("${TF_ROOT}") {
-                    bat 'terraform apply -auto-approve tfplan'
+                withCredentials([
+                    string(credentialsId: 'AWS_ACCESS_KEY', variable: 'TF_VAR_aws_access_key'),
+                    string(credentialsId: 'AWS_SECRET_KEY', variable: 'TF_VAR_aws_secret_key')
+                ]) {
+                    dir("${TF_ROOT}") {
+                        bat 'terraform apply -auto-approve tfplan'
+                    }
                 }
             }
         }
