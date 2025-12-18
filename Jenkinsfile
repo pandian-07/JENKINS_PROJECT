@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'hashicorp/terraform:1.5'
-            args '--entrypoint=""'
-        }
-    }
+    agent any
 
     environment {
         TF_ROOT = "My_INFRA_AWS"
@@ -13,31 +8,37 @@ pipeline {
 
     stages {
 
-        stage('Terraform Init & Validate') {
+        stage('Terraform Version') {
+            steps {
+                bat 'terraform --version'
+            }
+        }
+
+        stage('Terraform Init') {
             steps {
                 withCredentials([
                     string(credentialsId: 'AWS_ACCESS_KEY', variable: 'AWS_ACCESS_KEY_ID'),
                     string(credentialsId: 'AWS_SECRET_KEY', variable: 'AWS_SECRET_ACCESS_KEY')
                 ]) {
                     dir("${TF_ROOT}") {
-                        sh '''
-                          terraform init
-                          terraform validate
-                        '''
+                        bat 'terraform init'
                     }
+                }
+            }
+        }
+
+        stage('Terraform Validate') {
+            steps {
+                dir("${TF_ROOT}") {
+                    bat 'terraform validate'
                 }
             }
         }
 
         stage('Terraform Plan') {
             steps {
-                withCredentials([
-                    string(credentialsId: 'AWS_ACCESS_KEY', variable: 'AWS_ACCESS_KEY_ID'),
-                    string(credentialsId: 'AWS_SECRET_KEY', variable: 'AWS_SECRET_ACCESS_KEY')
-                ]) {
-                    dir("${TF_ROOT}") {
-                        sh 'terraform plan -out=tfplan'
-                    }
+                dir("${TF_ROOT}") {
+                    bat 'terraform plan -out=tfplan'
                 }
             }
         }
@@ -48,33 +49,8 @@ pipeline {
                 ok "Apply"
             }
             steps {
-                withCredentials([
-                    string(credentialsId: 'AWS_ACCESS_KEY', variable: 'AWS_ACCESS_KEY_ID'),
-                    string(credentialsId: 'AWS_SECRET_KEY', variable: 'AWS_SECRET_ACCESS_KEY')
-                ]) {
-                    dir("${TF_ROOT}") {
-                        sh '''
-                          terraform apply -auto-approve tfplan
-                          terraform output -raw public_ip > ec2_ip.txt
-                        '''
-                    }
-                }
-            }
-        }
-
-        stage('Terraform Destroy') {
-            input {
-                message "Destroy Terraform Infrastructure?"
-                ok "Destroy"
-            }
-            steps {
-                withCredentials([
-                    string(credentialsId: 'AWS_ACCESS_KEY', variable: 'AWS_ACCESS_KEY_ID'),
-                    string(credentialsId: 'AWS_SECRET_KEY', variable: 'AWS_SECRET_ACCESS_KEY')
-                ]) {
-                    dir("${TF_ROOT}") {
-                        sh 'terraform destroy -auto-approve'
-                    }
+                dir("${TF_ROOT}") {
+                    bat 'terraform apply -auto-approve tfplan'
                 }
             }
         }
